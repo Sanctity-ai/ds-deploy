@@ -1,0 +1,372 @@
+[
+    {
+        "question": "When evaluating a potential investment, which aspect excites you the most?",
+        "options": {
+            "A": {
+                "text": "The scalability of the product or service.",
+                "meanings": {
+                    "literal": "Focuses on growth potential.",
+                    "inference": "Prefers investments with high returns.",
+                    "subconscious": "Likely risk-tolerant and values rapid expansion."
+                }
+            },
+            "B": {
+                "text": "The passion and vision of the founding team.",
+                "meanings": {
+                    "literal": "Values the drive and vision of entrepreneurs.",
+                    "inference": "Believes in the importance of strong leadership.",
+                    "subconscious": "Likely prefers to work with charismatic and committed founders."
+                }
+            },
+            "C": {
+                "text": "The market size and existing demand.",
+                "meanings": {
+                    "literal": "Interested in the size of the opportunity.",
+                    "inference": "Pragmatic and data-driven.",
+                    "subconscious": "Likely conservative and cautious about untested markets."
+                }
+            },
+            "D": {
+                "text": "The potential for a lucrative exit.",
+                "meanings": {
+                    "literal": "Focused on financial outcomes.",
+                    "inference": "Highly motivated by profit.",
+                    "subconscious": "Likely prioritizes financial returns over other factors."
+                }
+            }
+        }
+    },
+    {
+        "question": "If one of your portfolio startups faces a major challenge, how do you respond?",
+        "options": {
+            "A": {
+                "text": "Offer strategic advice and connect them with relevant experts.",
+                "meanings": {
+                    "literal": "Provides resources and guidance.",
+                    "inference": "Hands-on and supportive.",
+                    "subconscious": "Likely values collaboration and problem-solving."
+                }
+            },
+            "B": {
+                "text": "Step back and let the founders resolve the issue.",
+                "meanings": {
+                    "literal": "Trusts the team to handle challenges.",
+                    "inference": "Believes in founder autonomy.",
+                    "subconscious": "Likely risk-tolerant but minimally involved."
+                }
+            },
+            "C": {
+                "text": "Suggest pivoting to a new strategy immediately.",
+                "meanings": {
+                    "literal": "Encourages adaptability.",
+                    "inference": "Prefers quick adjustments over long deliberation.",
+                    "subconscious": "Likely fast-paced and highly pragmatic."
+                }
+            },
+            "D": {
+                "text": "Consider reducing future funding to minimize losses.",
+                "meanings": {
+                    "literal": "Focused on financial prudence.",
+                    "inference": "Conservative and risk-averse.",
+                    "subconscious": "Likely prioritizes capital protection over recovery efforts."
+                }
+            }
+        }
+    },
+    {
+        "question": "Which type of startups do you find most appealing?",
+        "options": {
+            "A": {
+                "text": "Those with innovative technology disrupting traditional industries.",
+                "meanings": {
+                    "literal": "Values groundbreaking ideas.",
+                    "inference": "Excited by innovation and risk-taking.",
+                    "subconscious": "Likely to invest in high-risk, high-reward ventures."
+                }
+            },
+            "B": {
+                "text": "Those with proven business models and steady revenue.",
+                "meanings": {
+                    "literal": "Prefers stable and predictable growth.",
+                    "inference": "Conservative and risk-averse.",
+                    "subconscious": "Likely to avoid experimental or unproven concepts."
+                }
+            },
+            "C": {
+                "text": "Those addressing large-scale social or environmental issues.",
+                "meanings": {
+                    "literal": "Interested in impactful ventures.",
+                    "inference": "Values purpose alongside profit.",
+                    "subconscious": "Likely driven by ethical or personal values."
+                }
+            },
+            "D": {
+                "text": "Those in fast-growing, trendy markets like AI or blockchain.",
+                "meanings": {
+                    "literal": "Follows market trends.",
+                    "inference": "Opportunistic and trend-focused.",
+                    "subconscious": "Likely to prioritize timing and market sentiment over fundamentals."
+                }
+            }
+        }
+    },
+    {
+        "question": "How important is diversification in your investment portfolio?",
+        "options": {
+            "A": {
+                "text": "It’s critical; I aim for balanced exposure across sectors.",
+                "meanings": {
+                    "literal": "Values variety.",
+                    "inference": "Seeks to minimize risk through diversification.",
+                    "subconscious": "Likely risk-averse and methodical."
+                }
+            },
+            "B": {
+                "text": "Somewhat important; I focus on complementary sectors.",
+                "meanings": {
+                    "literal": "Looks for related opportunities.",
+                    "inference": "Strategic about maintaining focus.",
+                    "subconscious": "Likely prefers depth over breadth in investments."
+                }
+            },
+            "C": {
+                "text": "Not very important; I focus on areas I know best.",
+                "meanings": {
+                    "literal": "Prioritizes expertise over variety.",
+                    "inference": "Risk-tolerant but specialized.",
+                    "subconscious": "Likely to double down on areas of strength."
+                }
+            },
+            "D": {
+                "text": "I don’t think about diversification; I chase high-potential opportunities.",
+                "meanings": {
+                    "literal": "Focused on specific bets.",
+                    "inference": "Highly risk-tolerant and opportunistic.",
+                    "subconscious": "Likely to embrace concentrated risk."
+                }
+            }
+        }
+    },
+    {
+        "question": "When do you prefer to exit an investment?",
+        "options": {
+            "A": {
+                "text": "After a significant milestone like IPO or acquisition.",
+                "meanings": {
+                    "literal": "Long-term orientation.",
+                    "inference": "Patient and goal-driven.",
+                    "subconscious": "Likely values prestige and large payoffs."
+                }
+            },
+            "B": {
+                "text": "Once my initial investment has doubled or tripled.",
+                "meanings": {
+                    "literal": "Prioritizes financial benchmarks.",
+                    "inference": "Profit-focused but balanced.",
+                    "subconscious": "Likely seeks moderate, predictable returns."
+                }
+            },
+            "C": {
+                "text": "As soon as the market conditions are favorable.",
+                "meanings": {
+                    "literal": "Watches external factors closely.",
+                    "inference": "Opportunistic and market-sensitive.",
+                    "subconscious": "Likely to act quickly when profits are visible."
+                }
+            },
+            "D": {
+                "text": "I rarely exit; I prefer to remain involved long-term.",
+                "meanings": {
+                    "literal": "Prefers long-term involvement.",
+                    "inference": "Values sustained impact over quick returns.",
+                    "subconscious": "Likely mission-driven or relationship-focused."
+                }
+            }
+        }
+    },
+    {
+        "question": "How do you typically decide whether to invest in a startup?",
+        "options": {
+            "A": {
+                "text": "I rely on comprehensive financial projections and market analysis.",
+                "meanings": {
+                    "literal": "Data-driven decision-making.",
+                    "inference": "Values thorough research and clear metrics.",
+                    "subconscious": "Likely cautious and detail-oriented."
+                }
+            },
+            "B": {
+                "text": "I focus on the founder's vision and personal charisma.",
+                "meanings": {
+                    "literal": "Founder-centric approach.",
+                    "inference": "Trusts the leadership more than the numbers.",
+                    "subconscious": "Likely empathetic and inspired by passion."
+                }
+            },
+            "C": {
+                "text": "I follow the recommendations of trusted advisors or co-investors.",
+                "meanings": {
+                    "literal": "Leverages networks and expertise.",
+                    "inference": "Relies on collective wisdom over individual analysis.",
+                    "subconscious": "Likely values collaboration and shared risk."
+                }
+            },
+            "D": {
+                "text": "I look for a strong gut feeling after initial discussions.",
+                "meanings": {
+                    "literal": "Intuition-based approach.",
+                    "inference": "Trusts instincts and informal assessments.",
+                    "subconscious": "Likely spontaneous and willing to take leaps of faith."
+                }
+            }
+        }
+    },
+    {
+        "question": "How do you evaluate a founder’s leadership potential?",
+        "options": {
+            "A": {
+                "text": "By their ability to articulate a clear and compelling vision.",
+                "meanings": {
+                    "literal": "Focuses on communication skills.",
+                    "inference": "Values visionaries who inspire confidence.",
+                    "subconscious": "Likely motivated by bold, transformative ideas."
+                }
+            },
+            "B": {
+                "text": "By their track record of managing successful projects.",
+                "meanings": {
+                    "literal": "Looks at past achievements.",
+                    "inference": "Prefers experienced and reliable leaders.",
+                    "subconscious": "Likely risk-averse and reliant on proven competence."
+                }
+            },
+            "C": {
+                "text": "By their willingness to adapt and learn from feedback.",
+                "meanings": {
+                    "literal": "Focuses on flexibility and growth mindset.",
+                    "inference": "Sees potential in founders who evolve.",
+                    "subconscious": "Likely supportive of iterative and resilient leadership."
+                }
+            },
+            "D": {
+                "text": "By how they respond under pressure in challenging situations.",
+                "meanings": {
+                    "literal": "Assesses crisis management skills.",
+                    "inference": "Values calm and strategic thinkers.",
+                    "subconscious": "Likely prioritizes leaders who thrive under stress."
+                }
+            }
+        }
+    },
+    {
+        "question": "If a startup shows steady growth but isn’t meeting ambitious targets, what’s your reaction?",
+        "options": {
+            "A": {
+                "text": "Encourage the team to reassess and pivot to align with new goals.",
+                "meanings": {
+                    "literal": "Supports recalibration.",
+                    "inference": "Values adaptability and strategic shifts.",
+                    "subconscious": "Likely pragmatic and open to changing direction."
+                }
+            },
+            "B": {
+                "text": "Offer additional resources to help them scale faster.",
+                "meanings": {
+                    "literal": "Invests in accelerating growth.",
+                    "inference": "Optimistic about potential despite shortfalls.",
+                    "subconscious": "Likely risk-tolerant and supportive of ambitious goals."
+                }
+            },
+            "C": {
+                "text": "Continue observing but hold off on further investment.",
+                "meanings": {
+                    "literal": "Exercises caution and patience.",
+                    "inference": "Hesitant to overcommit without clearer results.",
+                    "subconscious": "Likely conservative and values steady performance."
+                }
+            },
+            "D": {
+                "text": "Reassess my involvement and consider an early exit.",
+                "meanings": {
+                    "literal": "Evaluates pulling out to avoid further risk.",
+                    "inference": "Focused on minimizing losses.",
+                    "subconscious": "Likely prefers controlled risk-taking and financial security."
+                }
+            }
+        }
+    },
+    {
+        "question": "Which industry trends excite you the most?",
+        "options": {
+            "A": {
+                "text": "Disruptive technologies like AI, robotics, or blockchain.",
+                "meanings": {
+                    "literal": "Fascinated by cutting-edge advancements.",
+                    "inference": "Open to high-risk, high-reward opportunities.",
+                    "subconscious": "Likely driven by curiosity and innovation."
+                }
+            },
+            "B": {
+                "text": "Sustainable and green solutions for global challenges.",
+                "meanings": {
+                    "literal": "Focused on impactful investments.",
+                    "inference": "Values ethical and socially responsible businesses.",
+                    "subconscious": "Likely purpose-driven and environmentally conscious."
+                }
+            },
+            "C": {
+                "text": "Consumer-focused markets with high demand, like e-commerce.",
+                "meanings": {
+                    "literal": "Prefers areas with clear profitability.",
+                    "inference": "Practical and focused on established sectors.",
+                    "subconscious": "Likely risk-averse and profit-oriented."
+                }
+            },
+            "D": {
+                "text": "High-growth emerging markets, regardless of industry.",
+                "meanings": {
+                    "literal": "Chases opportunities in trending sectors.",
+                    "inference": "Opportunistic and adaptable to changing markets.",
+                    "subconscious": "Likely responsive to global economic trends."
+                }
+            }
+        }
+    },
+    {
+        "question": "How do you view your role after funding a startup?",
+        "options": {
+            "A": {
+                "text": "A mentor and advisor, guiding the team toward success.",
+                "meanings": {
+                    "literal": "Actively involved post-investment.",
+                    "inference": "Hands-on and supportive.",
+                    "subconscious": "Likely values partnerships and collaboration."
+                }
+            },
+            "B": {
+                "text": "A resource provider who connects them with the right people.",
+                "meanings": {
+                    "literal": "Focuses on facilitating resources.",
+                    "inference": "Adds value through networks.",
+                    "subconscious": "Likely values influence and connection-building."
+                }
+            },
+            "C": {
+                "text": "A passive investor who monitors performance occasionally.",
+                "meanings": {
+                    "literal": "Minimal involvement.",
+                    "inference": "Trusts the founders to deliver.",
+                    "subconscious": "Likely prefers financial independence over direct control."
+                }
+            },
+            "D": {
+                "text": "A strategic partner who ensures milestones are met.",
+                "meanings": {
+                    "literal": "Engaged in goal tracking and accountability.",
+                    "inference": "Emphasizes structure and results.",
+                    "subconscious": "Likely goal-driven and focused on measurable outcomes."
+                }
+            }
+        }
+    }
+]

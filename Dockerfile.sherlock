@@ -1,0 +1,21 @@
+# Dockerfile for sherlock_api
+FROM python:3.10-slim
+
+# Set work directory
+WORKDIR /app
+
+# Copy and install dependencies
+COPY sherlock_api/requirements.txt ./requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copy the source code and common files
+COPY sherlock_api/ ./sherlock_api/
+COPY questions.json ./questions.json
+COPY prompts.json ./prompts.json
+COPY sherlock_api/database.py ./sherlock_api/database.py
+
+# Expose port 8000
+EXPOSE 8000
+
+# Run the application with uvicorn
+CMD ["uvicorn", "sherlock_api.main:app", "--host", "0.0.0.0", "--port", "8000"]

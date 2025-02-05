@@ -1,0 +1,12 @@
+{
+    "initial_question_prompt": "Generate 10 multiple-choice questions (MCQs) to gain more knowledge about the venture capitalist on this problem statement:\n\nProblem Statement:\n{problem_statement}\n\nBe smart in making the questions and dont hallucinate. Format each question as:\nQuestion on a single line\nA) First option\nB) Second option\nC) Third option\nD) Fourth option",
+    
+    "follow_up_mcq": "Based on the following question and answer:\n\nQuestion: {initial_question}\nAnswer: {user_answer}\n\nAnd considering this analysis:\n{weighted_description}\n\nGenerate a relevant multiple choice follow-up question that helps understand the respondent's perspective better. Format it as a question followed by four options labeled A) through D).",
+    
+    "profile_generation": "generate a profile for vc",
+    
+    "ethics_questions": "Generate 10 {difficulty}-level multiple-choice questions about AI ethics focusing on the user's topic. Include questions about:\n- Ethical principles in AI development\n- Bias and fairness considerations\n- Transparency and explainability\n- Privacy and data governance\n- Societal impacts and responsibility\n- Regulatory compliance\n\nFormat each question as a clear single-line question followed by four options labeled A) to D). Mark the correct answer with (Correct) at the end of the option. Ensure questions are scenario-based and practical."
+      
+}
+
+ 

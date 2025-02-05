@@ -1,0 +1,17 @@
+# Dockerfile for bookworm_api
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copy and install dependencies
+COPY bookworm_api/requirements.txt ./requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copy the source code and common files
+COPY bookworm_api/ ./bookworm_api/
+COPY questions.json ./questions.json
+COPY prompts.json ./prompts.json
+
+EXPOSE 8000
+
+CMD ["uvicorn", "bookworm_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
