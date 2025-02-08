@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field, field_validator, model_validator
 from pydantic_settings import BaseSettings
 from typing import List, Dict, Optional
 import json
@@ -17,10 +18,9 @@ from database import (
     upsert_questions_and_answers
 )
 
-# Load environment variables
+# Load environment variables and configure logging (same as before)
 load_dotenv()
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -42,10 +42,6 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
-@lru_cache()
-def get_settings():
-    return Settings()
-
 class Meaning(BaseModel):
     literal: str
     inference: str
@@ -57,9 +53,20 @@ class Response(BaseModel):
     meanings: Meaning
 
 class Weightages(BaseModel):
-    literal: float
-    inference: float
-    subconscious: float
+    literal: float = Field(default=0.5, ge=0, le=1)
+    inference: float = Field(default=0.2, ge=0, le=1)
+    subconscious: float = Field(default=0.3, ge=0, le=1)
+
+    @model_validator(mode='after')
+    def validate_total(self) -> 'Weightages':
+        total = self.literal + self.inference + self.subconscious
+        if not (0.99 <= total <= 1.01):
+            raise ValueError(f"Weightages must sum to 1.0 (current sum: {total})")
+        return self
+
+    @property
+    def total(self) -> float:
+        return self.literal + self.inference + self.subconscious
 
 class MCQ(BaseModel):
     question: str
@@ -68,6 +75,16 @@ class MCQ(BaseModel):
 class FollowUpRequest(BaseModel):
     responses: List[Response]
     weightages: Optional[Weightages] = None
+
+    @model_validator(mode='before')
+    @classmethod
+    def set_default_weightages(cls, values: dict) -> dict:
+        if values.get('weightages') is None:
+            values['weightages'] = Weightages()
+        return values
+
+    class Config:
+        validate_assignment = True
 
 class FollowUpResponse(BaseModel):
     questions: List[MCQ]
@@ -84,16 +101,25 @@ class ConfigLoader:
                 return json.load(file)
         except FileNotFoundError:
             logger.error(f"File not found: {file_path}")
-            raise HTTPException(status_code=500, detail="Configuration file not found")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Configuration file not found"
+            )
         except json.JSONDecodeError:
             logger.error(f"Invalid JSON in file: {file_path}")
-            raise HTTPException(status_code=500, detail="Invalid configuration file")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Invalid configuration file"
+            )
 
     @staticmethod
     def validate_prompts(prompts: dict) -> None:
         required_keys = {'follow_up_mcq', 'profile_generation'}
         if not all(key in prompts for key in required_keys):
-            raise HTTPException(status_code=500, detail="Invalid prompts configuration")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Invalid prompts configuration"
+            )
 
 ############################################################
 # Request Validator Section
@@ -117,17 +143,7 @@ class RequestValidator:
             if not response.answer.strip():
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=f"Empty answer found at index {idx}"
-                )
-
-    @staticmethod
-    def validate_weightages(weightages: Weightages) -> None:
-        total = weightages.literal + weightages.inference + weightages.subconscious
-        if not (0.99 <= total <= 1.01):  # Allow for small floating-point errors
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Weightages must sum to 1.0 (current sum: {total})"
-            )
+                    detail=f"Empty answer found at index {idx}")
 
 ############################################################
 # GPT Service Section
@@ -147,7 +163,7 @@ class GPTService:
         )
         self.tokenizer, self.model = load_bert_model()
 
-    def generate_follow_up_mcq_weighted(
+    async def generate_follow_up_mcq_weighted(
         self,
         initial_question: str,
         user_answer: str,
@@ -167,12 +183,15 @@ class GPTService:
                 weighted_description=weighted_description
             )
 
-            response = self.client.chat.completions.create(
-                model="gpt-4",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.7,
-                max_tokens=250,
-                n=1
+            response = await asyncio.get_event_loop().run_in_executor(
+                None,
+                lambda: self.client.chat.completions.create(
+                    model="gpt-4",
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0.7,
+                    max_tokens=250,
+                    n=1
+                )
             )
             
             follow_up_mcq = response.choices[0].message.content.strip()
@@ -209,11 +228,12 @@ class GPTService:
 ############################################################
 
 @lru_cache()
+def get_settings():
+    return Settings()
+
+@lru_cache()
 def get_gpt_service() -> GPTService:
     return GPTService()
-
-def get_default_weightages() -> Weightages:
-    return Weightages(literal=0.5, inference=0.2, subconscious=0.3)
 
 ############################################################
 # FastAPI App Section
@@ -225,7 +245,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configure CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -238,28 +257,21 @@ app.add_middleware(
 async def get_follow_up_questions(
     request: FollowUpRequest,
     gpt_service: GPTService = Depends(get_gpt_service),
-    default_weightages: Weightages = Depends(get_default_weightages),
     settings: Settings = Depends(get_settings)
 ) -> FollowUpResponse:
     """
     Generate follow-up questions based on initial responses.
-    
-    Args:
-        request (FollowUpRequest): Contains initial responses and optional weightages
-        gpt_service (GPTService): Service for generating questions
-        default_weightages (Weightages): Default weightages if not provided
-        settings (Settings): Application settings
-    
-    Returns:
-        FollowUpResponse: Generated follow-up questions
     """
     try:
         # Validate request
         RequestValidator.validate_responses(request.responses)
-        weightages = request.weightages or default_weightages
-        RequestValidator.validate_weightages(weightages)
+        weightages = request.weightages or Weightages()
 
-        follow_up_questions = []
+        if not (0.99 <= weightages.total <= 1.01):
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"detail": f"Weightages must sum to 1.0 (current sum: {weightages.total})"}
+            )
 
         # Store initial responses in Pinecone
         initial_questions = [r.question for r in request.responses]
@@ -279,62 +291,42 @@ async def get_follow_up_questions(
             )
         )
 
-        # Generate follow-up questions
-        for response in request.responses:
-            mcq = await asyncio.get_event_loop().run_in_executor(
-                None,
-                lambda: gpt_service.generate_follow_up_mcq_weighted(
-                    response.question,
-                    response.answer,
-                    response.meanings.dict(),
-                    weightages.dict()
-                )
+        # Generate follow-up questions concurrently
+        tasks = [
+            gpt_service.generate_follow_up_mcq_weighted(
+                response.question,
+                response.answer,
+                response.meanings.dict(),
+                weightages.dict()
             )
-            
-            if mcq:
-                follow_up_questions.append(MCQ(**mcq))
-            else:
-                logger.warning(f"Failed to generate MCQ for question: {response.question}")
+            for response in request.responses
+        ]
+        
+        mcq_results = await asyncio.gather(*tasks)
+        follow_up_questions = [
+            MCQ(**mcq) for mcq in mcq_results 
+            if mcq is not None
+        ]
 
         if not follow_up_questions:
-            raise HTTPException(
+            return JSONResponse(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Failed to generate any follow-up questions"
+                content={"detail": "Failed to generate any follow-up questions"}
             )
 
         return FollowUpResponse(questions=follow_up_questions)
 
-    except HTTPException:
-        raise
+    except ValueError as ve:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={"detail": str(ve)}
+        )
     except Exception as e:
         logger.error(f"Error processing follow-up questions request: {e}")
-        raise HTTPException(
+        return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Error processing request: {str(e)}"
+            content={"detail": f"Error processing request: {str(e)}"}
         )
-
-############################################################
-# Error Handlers Section
-############################################################
-
-@app.exception_handler(HTTPException)
-async def http_exception_handler(request, exc):
-    return {
-        "status_code": exc.status_code,
-        "detail": exc.detail
-    }
-
-@app.exception_handler(Exception)
-async def general_exception_handler(request, exc):
-    logger.error(f"Unhandled exception: {exc}")
-    return {
-        "status_code": 500,
-        "detail": "Internal server error"
-    }
-
-############################################################
-# Main Entry Point
-############################################################
 
 if __name__ == "__main__":
     import uvicorn
